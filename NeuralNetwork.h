@@ -21,7 +21,7 @@ private:
 	vector<vector<double> > inputWeights, hiddenWeights;
 	vector<double> hiddenBias, outputBias;
 	double learningRate = 0.001;
-	bool isActivationFunctionDiffFn = 0;
+	bool isActivationFunctionDiffFn = 1;
 };
 
 #endif /* NEURALNETWORK_H_ */
