@@ -1,6 +1,6 @@
 #include "NeuralNetwork.h"
 
-#define eps 1e-9
+const double eps = 1e-9 ;
 double NeuralNetwork::activationFunction(double netI) {
 
 }
