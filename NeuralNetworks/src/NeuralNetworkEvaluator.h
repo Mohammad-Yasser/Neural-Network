@@ -10,15 +10,12 @@
 
 #include "NeuralNetwork.h"
 
-class NeuralNetworkEvaluator: NeuralNetwork {
+class NeuralNetworkEvaluator: public NeuralNetwork {
 public:
-	NeuralNetworkEvaluator(const vector<vector<double> >& input_weights,
-			const vector<vector<double>>& hidden_weights,
-			const vector<double>& hidden_bias, const vector<double>& output_bias) :
-			_input_nodes(input_weights.size()), _hidden_nodes(hidden_weights.size()), _output_nodes(
-					output_bias.size()) {
+	NeuralNetworkEvaluator(const NeuralNetwork& network) {
+		*this = network;
 	}
-	vector<double> CalculateOutput();
+	vector<double> CalculateOutput(const vector<double>& input);
 };
 
 #endif /* NEURALNETWORKEVALUATOR_H_ */

@@ -12,14 +12,33 @@
 
 class NeuralNetworkTrainer: public NeuralNetwork {
 public:
+
+	void InitializeWeights(int layer_size, int next_layer_size,
+			vector<vector<double>>& weights);
+	void InitializeWeights();
+	void InitializeBiases();
+	void InitializeWeightsAndBiases();
+	// The activation function used is the sigmoid function.
+	double CalculateActivationFunctionDerivative(double x);
 	// Returns the MSE.
-	double Train(vector<vector<double> > &input, vector<vector<double> > &output);
+	// "input" size must be equal to "output" size.
+	double Train(const vector<vector<double> >& input,
+			const vector<vector<double> >& output);
+	double Train(const vector<double>& input, const vector<double>& output);
+	void UpdateWeightsAndBiases(const vector<double>& delta,
+			const vector<double>& values, vector<vector<double>>& weights,
+			vector<double>& biases);
 	void GetWeightsAndBiases(vector<vector<double>>& input_weights,
 			vector<vector<double>>& output_weights);
 private:
 	const int kTrainingIterations = 500;
 	const double kAcceptableMeanSquareError = 100;
 	const double kLearningRate = 0.001;
+	const double kWeightRangeSize = 1;
+	const double kBiasRangeSize = 1;
+
+	void UpdateWeightsAndBiases(const vector<double>& output_delta,
+			const vector<double>& hidden_values);
 };
 
 #endif /* NEURALNETWORKTRAINER_H_ */
