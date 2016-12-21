@@ -21,10 +21,12 @@ void NeuralNetworkTrainer::InitializeWeights() {
 }
 
 void NeuralNetworkTrainer::InitializeBiases() {
+	_hidden_bias.resize(_hidden_nodes);
 	for (int j = 0; j < _hidden_nodes; ++j)
 		_hidden_bias[j] = rand() / (double) RAND_MAX * kBiasRangeSize
 				- kBiasRangeSize / 2;
 
+	_output_bias.resize(_output_nodes);
 	for (int k = 0; k < _output_nodes; ++k)
 		_output_bias[k] = rand() / (double) RAND_MAX * kBiasRangeSize
 				- kBiasRangeSize / 2;
@@ -48,8 +50,8 @@ void NeuralNetworkTrainer::UpdateWeightsAndBiases(const vector<double>& delta,
 
 double NeuralNetworkTrainer::Train(const vector<double>& input_values,
 		const vector<double>& given_output_values) {
-	vector<double> hidden_values(_hidden_nodes), output_values(_input_nodes),
-			hidden_delta(_hidden_nodes), output_delta(_input_nodes);
+	vector<double> hidden_values(_hidden_nodes), output_values(_output_nodes),
+			hidden_delta(_hidden_nodes), output_delta(_output_nodes);
 
 	CalculateLayerValues(input_values, _input_weights, _hidden_bias,
 			hidden_values);
@@ -89,9 +91,9 @@ double NeuralNetworkTrainer::Train(const vector<vector<double> > &input,
 		mean_square_error = 0;
 
 		for (int test_case = 0; test_case < input.size(); ++test_case) {
-			mean_square_error += Train(input[test_case], output[test_case]);
+			mean_square_error += Train(input[test_case], output[test_case])
+					/ input.size();
 		}
-		mean_square_error /= input.size();
 	}
 	return mean_square_error;
 }
