@@ -6,7 +6,7 @@ using namespace std;
 
 class NeuralNetwork {
 public:
-	double CalculateActivationFunction(double netI);
+	double CalculateActivationFunction(double x);
 	double CalculateActivationFunctionDerivative(double x);
 	double GetNetInput(vector<double> &input, vector<double> &weights,
 			double bias);
@@ -23,11 +23,8 @@ public:
 
 protected:
 	int _input_nodes, _hidden_nodes, _output_nodes;
-	// input_nodes = input layer nodes, l = hidden layer nodes, n = output layer nodes.
-	// iterators on input, hidden, output layers are i,j,k respectively.
-	vector<vector<double> > inputWeights, hiddenWeights;
-	vector<double> hiddenBias, outputBias;
-	double learningRate = 0.001;
+	vector<vector<double> > _input_weights, _hidden_weights;
+	vector<double> _hidden_bias, _output_bias;
 };
 
 #endif /* NEURALNETWORK_H_ */
