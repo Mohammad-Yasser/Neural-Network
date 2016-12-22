@@ -38,9 +38,9 @@ public:
 			vector<vector<double>>& output_weights);
 private:
 	const int kTrainingIterations = 500;
-	const double kAcceptableMeanSquareError = 100;
-	const double kLearningRate = 0.7;
-	const double kWeightRangeSize = 10;
+	const double kAcceptableMeanSquareError = 1000;
+	const double kLearningRate = 0.3;
+	const double kWeightRangeSize = 1;
 	const double kBiasRangeSize = 1;
 };
 
