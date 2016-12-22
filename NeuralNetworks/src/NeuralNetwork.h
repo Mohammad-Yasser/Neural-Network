@@ -22,7 +22,7 @@ public:
 	// "layer_values" size must be equal to the number of layer's nodes.
 	void CalculateLayerValues(const vector<double>& input,
 			const vector<vector<double>>& weights, const vector<double>& biases,
-			vector<double>& layer_values);
+			vector<double>& layer_values, bool apply_activation_function = true);
 
 protected:
 	int _input_nodes, _hidden_nodes, _output_nodes;

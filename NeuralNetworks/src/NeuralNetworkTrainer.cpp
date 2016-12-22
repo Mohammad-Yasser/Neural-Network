@@ -9,9 +9,10 @@ void NeuralNetworkTrainer::InitializeWeights(int layer_size,
 	weights.resize(next_layer_size);
 	for (int j = 0; j < next_layer_size; ++j) {
 		weights[j].resize(layer_size);
-		for (int i = 0; i < layer_size; ++i)
+		for (int i = 0; i < layer_size; ++i) {
 			weights[j][i] = rand() / (double) RAND_MAX * kWeightRangeSize
 					- kWeightRangeSize / 2;
+		}
 	}
 }
 
@@ -41,8 +42,9 @@ void NeuralNetworkTrainer::UpdateWeightsAndBiases(const vector<double>& delta,
 		const vector<double>& values, vector<vector<double>>& weights,
 		vector<double>& biases) {
 	for (int j = 0; j < delta.size(); ++j) {
-		for (int i = 0; i < _input_nodes; ++i) {
+		for (int i = 0; i < values.size(); ++i) {
 			weights[j][i] += kLearningRate * delta[j] * values[i];
+			assert(weights[j][i] == weights[j][i]);
 		}
 		biases[j] += kLearningRate * delta[j];
 	}
@@ -59,13 +61,13 @@ double NeuralNetworkTrainer::Train(const vector<double>& input_values,
 			output_values);
 
 	for (int k = 0; k < _output_nodes; ++k) {
-		output_delta[k] = (given_output_values[k] - output_values[k])
-				* CalculateActivationFunctionDerivative(
-						GetNetInput(hidden_values, _hidden_weights[k], _output_bias[k]));
+		output_delta[k] = (given_output_values[k] - output_values[k]);
+		output_delta[k] *= CalculateActivationFunctionDerivative(output_values[k]);
 	}
 	for (int j = 0; j < _hidden_nodes; ++j) {
-		for (int k = 0; k < _output_nodes; ++k)
+		for (int k = 0; k < _output_nodes; ++k) {
 			hidden_delta[j] += output_delta[k] * _hidden_weights[k][j];
+		}
 		hidden_delta[j] *= CalculateActivationFunctionDerivative(hidden_values[j]);
 	}
 
@@ -74,6 +76,8 @@ double NeuralNetworkTrainer::Train(const vector<double>& input_values,
 	UpdateWeightsAndBiases(hidden_delta, input_values, _input_weights,
 			_hidden_bias);
 
+	CalculateLayerValues(hidden_values, _hidden_weights, _output_bias,
+			output_values, false);
 	return CalculateMeanSquareError(output_values, given_output_values);
 }
 

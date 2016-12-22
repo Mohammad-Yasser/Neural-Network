@@ -39,8 +39,8 @@ public:
 private:
 	const int kTrainingIterations = 500;
 	const double kAcceptableMeanSquareError = 100;
-	const double kLearningRate = 0.001;
-	const double kWeightRangeSize = 100;
+	const double kLearningRate = 0.7;
+	const double kWeightRangeSize = 10;
 	const double kBiasRangeSize = 1;
 };
 

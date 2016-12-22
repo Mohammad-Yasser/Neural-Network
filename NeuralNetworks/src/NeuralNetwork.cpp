@@ -1,10 +1,9 @@
 #include "NeuralNetwork.h"
 
 double NeuralNetwork::CalculateActivationFunction(double x) {
-	return 1 / (1 + exp(-x));
+	double res = 1 / (1 + exp(-x));
+	return res;
 }
-
-
 
 // "first" size must be equal to "second" size.
 double CalculateMeanSquareError(const vector<double>& first,
@@ -23,15 +22,17 @@ double NeuralNetwork::GetNetInput(const vector<double> &input,
 	for (int i = 0; i < input.size(); ++i) {
 		net_input += input[i] * weights[i];
 	}
+
 	return net_input + bias;
 }
 
-
 void NeuralNetwork::CalculateLayerValues(const vector<double>& input,
 		const vector<vector<double> >& weights, const vector<double>& biases,
-		vector<double>& layer_values) {
+		vector<double>& layer_values, bool apply_activation_function) {
 	for (int i = 0; i < layer_values.size(); ++i) {
-		double net = GetNetInput(input, weights[i], biases[i]);
-		layer_values[i] = CalculateActivationFunction(net);
+		layer_values[i] = GetNetInput(input, weights[i], biases[i]);
+		if (apply_activation_function) {
+			layer_values[i] = CalculateActivationFunction(layer_values[i]);
+		}
 	}
 }

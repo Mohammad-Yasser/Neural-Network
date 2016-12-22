@@ -29,6 +29,12 @@ int main() {
 	}
 
 	NeuralNetworkTrainer trainer(input_nodes, hidden_nodes, output_nodes);
-	cout << trainer.Train(input, output);
+	cout << trainer.Train(input, output) << endl;
+	NeuralNetworkEvaluator evaluator(trainer);
+	for (int i = 0; i < 10; ++i) {
+		auto output_ = evaluator.CalculateOutput(input[i]);
+		cout << output_[0] << endl;
+	}
+
 
 }

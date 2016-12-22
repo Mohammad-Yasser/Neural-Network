@@ -12,8 +12,9 @@
 
 class NeuralNetworkEvaluator: public NeuralNetwork {
 public:
-	NeuralNetworkEvaluator(const NeuralNetwork& network) {
-		*this = network;
+//	NeuralNetworkEvaluator() = delete;
+	NeuralNetworkEvaluator(const NeuralNetwork& network) :
+			NeuralNetwork(network) {
 	}
 	vector<double> CalculateOutput(const vector<double>& input);
 };
