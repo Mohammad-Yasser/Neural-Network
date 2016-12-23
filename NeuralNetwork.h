@@ -6,28 +6,34 @@ using namespace std;
 
 class NeuralNetwork {
 public:
-	double CalculateActivationFunction(double netI);
-	double CalculateActivationFunctionDerivative(double x);
-	double GetNetInput(vector<double> &input, vector<double> &weights,
-			double bias);
+	NeuralNetwork(int input_nodes, int hidden_nodes, int output_nodes) :
+			_input_nodes(input_nodes), _hidden_nodes(hidden_nodes), _output_nodes(
+					output_nodes) {
+	}
 
-	void SetInputNodes(int input_nodes) {
-		_input_nodes = input_nodes;
+	NeuralNetwork() {
+
 	}
-	void SetHiddenNodes(int hidden_nodes) {
-		_hidden_nodes = hidden_nodes;
-	}
-	void SetOutputNodes(int output_nodes) {
-		_output_nodes = output_nodes;
-	}
+
+	// The activation function used is the sigmoid function.
+	double CalculateActivationFunction(double x);
+	double GetNetInput(const vector<double>& input, const vector<double>& weights,
+			double bias);
+	// "layer_values" size must be equal to the number of layer's nodes.
+	void CalculateLayerValues(const vector<double>& input,
+			const vector<vector<double>>& weights, const vector<double>& biases,
+			vector<double>& layer_values, bool apply_activation_function = true);
 
 protected:
 	int _input_nodes, _hidden_nodes, _output_nodes;
-	// input_nodes = input layer nodes, l = hidden layer nodes, n = output layer nodes.
-	// iterators on input, hidden, output layers are i,j,k respectively.
-	vector<vector<double> > inputWeights, hiddenWeights;
-	vector<double> hiddenBias, outputBias;
-	double learningRate = 0.001;
+	// weights[i][j] means the weight on the edge between j-th node of this layer
+	// to i-th node of the next layer.
+	vector<vector<double> > _input_weights, _hidden_weights;
+	vector<double> _hidden_bias, _output_bias;
 };
+
+// "first" size must be equal to "second" size.
+double CalculateMeanSquareError(const vector<double>& first,
+		const vector<double>& second);
 
 #endif /* NEURALNETWORK_H_ */

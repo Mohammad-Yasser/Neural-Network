@@ -10,10 +10,13 @@
 
 #include "NeuralNetwork.h"
 
-class NeuralNetworkEvaluator: NeuralNetwork {
+class NeuralNetworkEvaluator: public NeuralNetwork {
 public:
-	void InitializeWeights();
-	vector<double> CalculateOutput();
+//	NeuralNetworkEvaluator() = delete;
+	NeuralNetworkEvaluator(const NeuralNetwork& network) :
+			NeuralNetwork(network) {
+	}
+	vector<double> CalculateOutput(const vector<double>& input);
 };
 
 #endif /* NEURALNETWORKEVALUATOR_H_ */
